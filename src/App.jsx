@@ -1,64 +1,39 @@
-import React from "react";
+import { useState } from "react";
+import LandingScreen from "./LandingScreen";
+import AssessmentForm from "./AssessmentForm";
 import "./App.css";
 
 function App() {
+  const [screen, setScreen] = useState("landing");
+  const [answers, setAnswers] = useState(null);
+
+  function handleComplete(userAnswers) {
+    setAnswers(userAnswers);
+    setScreen("results");
+  }
+
   return (
-    <main style={{ textAlign: "center", padding: "2rem", maxWidth: "500px" }}>
-      <header style={{ marginBottom: "2.5rem" }}>
-        <h1
-          style={{
-            fontSize: "2.5rem",
-            fontWeight: "700",
-            marginBottom: "0.5rem",
-          }}
-        >
-          GradReady
-        </h1>
-        <p style={{ color: "var(--text-muted)", fontSize: "1.1rem" }}>
-          Your student career readiness tracker.
-        </p>
-      </header>
-
-      <section
-        style={{
-          background: "#ffffff",
-          padding: "2.5rem",
-          borderRadius: "8px",
-          border: "1px solid var(--border-color)",
-          boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-        }}
-      >
-        <h2 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>
-          Is time running out?
-        </h2>
-        <p
-          style={{
-            color: "var(--text-muted)",
-            marginBottom: "2rem",
-            lineHeight: "1.5",
-          }}
-        >
-          Get an honest starting point, a clear gap analysis vs industry
-          requirements, and a personalized AI action plan in under 5 minutes.
-        </p>
-
-        <button
-          onClick={() => alert("Form coming next!")}
-          style={{
-            background: "var(--text-main)",
-            color: "#ffffff",
-            border: "none",
-            padding: "0.8rem 1.5rem",
-            borderRadius: "6px",
-            fontSize: "1rem",
-            fontWeight: "600",
-            cursor: "pointer",
-          }}
-        >
-          Check My Readiness
-        </button>
-      </section>
-    </main>
+    <>
+      {screen === "landing" && (
+        <LandingScreen onStart={() => setScreen("assessment")} />
+      )}
+      {screen === "assessment" && (
+        <AssessmentForm
+          onComplete={handleComplete}
+          onBack={() => setScreen("landing")}
+        />
+      )}
+      {screen === "results" && (
+        <div style={{ padding: "2rem", textAlign: "center" }}>
+          <h2>Results coming next!</h2>
+          <pre
+            style={{ textAlign: "left", marginTop: "1rem", fontSize: "0.8rem" }}
+          >
+            {JSON.stringify(answers, null, 2)}
+          </pre>
+        </div>
+      )}
+    </>
   );
 }
 
