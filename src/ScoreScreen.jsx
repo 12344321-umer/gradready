@@ -125,7 +125,7 @@ function getGaps(answers) {
     : ["You're in good shape. Focus on consistency and keep applying."];
 }
 
-function ScoreScreen({ answers, onRestart }) {
+function ScoreScreen({ answers, onRestart, onGetPlan }) {
   const score = calculateScore(answers);
   const { label, color, bg } = getLabel(score);
   const gaps = getGaps(answers);
@@ -159,7 +159,11 @@ function ScoreScreen({ answers, onRestart }) {
         </ul>
       </div>
 
-      <button className="btn-primary" onClick={onRestart}>
+      <button className="btn-primary" onClick={onGetPlan}>
+        Get My Action Plan →
+      </button>
+
+      <button className="btn-ghost" onClick={onRestart}>
         Start Over
       </button>
     </div>

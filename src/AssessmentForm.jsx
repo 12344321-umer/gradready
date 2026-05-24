@@ -115,56 +115,71 @@ function AssessmentForm({ onComplete, onBack }) {
     q.type === "multi" ? (answers[q.id] || []).length > 0 : !!answers[q.id];
 
   return (
-    <div className="assessment">
-      <div className="assessment-header">
-        <button className="btn-ghost" onClick={onBack}>
-          ← Back
-        </button>
-        <span className="progress-text">
-          {current + 1} of {questions.length}
-        </span>
-      </div>
-
-      <div className="progress-bar">
+    <div className="assessment-wrapper">
+      {/* Branded nav */}
+      <nav className="assessment-nav">
         <div
-          className="progress-fill"
-          style={{ width: `${((current + 1) / questions.length) * 100}%` }}
-        />
-      </div>
+          className="logo"
+          style={{ fontSize: "1.3rem", cursor: "pointer" }}
+          onClick={onBack}
+        >
+          <span className="logo-grad">Grad</span>
+          <span className="logo-ready">Ready</span>
+          <span className="logo-dot">.</span>
+        </div>
+      </nav>
 
-      <div className="question-card">
-        <h2 className="question-text">{q.question}</h2>
-
-        <div className="options">
-          {q.options.map((option) => {
-            const isSelected =
-              q.type === "multi"
-                ? (answers[q.id] || []).includes(option)
-                : answers[q.id] === option;
-
-            return (
-              <button
-                key={option}
-                className={`option-btn ${isSelected ? "selected" : ""}`}
-                onClick={() =>
-                  q.type === "multi"
-                    ? handleMulti(option)
-                    : handleSingle(option)
-                }
-              >
-                {option}
-              </button>
-            );
-          })}
+      <div className="assessment">
+        <div className="assessment-header">
+          <button className="btn-ghost" onClick={onBack}>
+            ← Back
+          </button>
+          <span className="progress-text">
+            {current + 1} of {questions.length}
+          </span>
         </div>
 
-        <button
-          className="btn-primary"
-          onClick={handleNext}
-          disabled={!hasAnswer}
-        >
-          {isLast ? "See My Results →" : "Next →"}
-        </button>
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{ width: `${((current + 1) / questions.length) * 100}%` }}
+          />
+        </div>
+
+        <div className="question-card">
+          <h2 className="question-text">{q.question}</h2>
+
+          <div className="options">
+            {q.options.map((option) => {
+              const isSelected =
+                q.type === "multi"
+                  ? (answers[q.id] || []).includes(option)
+                  : answers[q.id] === option;
+
+              return (
+                <button
+                  key={option}
+                  className={`option-btn ${isSelected ? "selected" : ""}`}
+                  onClick={() =>
+                    q.type === "multi"
+                      ? handleMulti(option)
+                      : handleSingle(option)
+                  }
+                >
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            className="btn-primary"
+            onClick={handleNext}
+            disabled={!hasAnswer}
+          >
+            {isLast ? "See My Results →" : "Next →"}
+          </button>
+        </div>
       </div>
     </div>
   );

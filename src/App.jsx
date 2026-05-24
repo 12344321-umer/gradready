@@ -2,6 +2,7 @@ import { useState } from "react";
 import LandingScreen from "./LandingScreen";
 import AssessmentForm from "./AssessmentForm";
 import ScoreScreen from "./ScoreScreen";
+import PlanScreen from "./PlanScreen";
 import "./App.css";
 
 function App() {
@@ -25,7 +26,14 @@ function App() {
         />
       )}
       {screen === "results" && (
-        <ScoreScreen answers={answers} onRestart={() => setScreen("landing")} />
+        <ScoreScreen
+          answers={answers}
+          onRestart={() => setScreen("landing")}
+          onGetPlan={() => setScreen("plan")}
+        />
+      )}
+      {screen === "plan" && (
+        <PlanScreen answers={answers} onRestart={() => setScreen("landing")} />
       )}
     </>
   );
